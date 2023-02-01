@@ -62,13 +62,15 @@ We use CRAFT for initial text detection and for cropping out text regions. Sorti
 - We also used mean-shift clustering to cluster text on the similar vertical level.  
 - However, this assumes that the text is horizontally level.  
 - Few cases in which our earlier alignment procedure fails resulted in wrong order of the texts.
-  <img src="assets/msc-sort-vertical.png" height="300px">
+
+<img src="assets/msc-sort-vertical.png" height="300px">
 
 **Height**  
 - We use the height feature as a good indicator to predict whether the text is from the main license plate or elsewhere.  
 - Mean-shift clustering is used with the bandwidth proportional to the image size, and the larger height cluster is kept.  
 - The advantage is also that no labels are required since it is an unsupervised algorithm.
-  <img src="assets/msc-height.png" height="300px">
+
+<img src="assets/msc-height.png" height="300px">
 
 *Bandwidth Note:*  
 Various bandwidths were tested including `min(int(img_diag/10),20)`, `int(img_diag/10)`. We find that `int(img_diag/20)` yields the best result. Image diagonal is calculated using $\sqrt{HW}$ for a $W$-by-$H$ image.
@@ -78,12 +80,13 @@ Various bandwidths were tested including `min(int(img_diag/10),20)`, `int(img_di
 ### Post-processing: Text Cleanup
 
 We use DeepText for text recognition, then perform text cleaning using Regex since license plates only contains alphanumeric capital characters (depending on region).
+- Eg. `B34.52s!` will be cleaned to `B3452S`
 
 <br>
 
 ### Results
 
-We also perform ensembling across different text recognition methods (DeepText, EasyOCR) and different images from the horizontal image alignment output.  
+We also perform ensembling across different text recognition methods (DeepText, EasyOCR) and different images from the horizontal image alignment output, to see whether it improves prediction scores. 
 The results reported are using the mean *Levenshtein distance* or *edit distance* across the entire dataset.
 
 | Image \ Model | DeepText | EasyOCR | Ensemble: DeepText + EasyOCR |
