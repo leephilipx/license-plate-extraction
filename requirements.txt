@@ -1,0 +1,15 @@
+easyocr
+numpy
+opencv-python
+opencv-python-headless
+pandas
+Pillow
+scikit-image
+scipy
+torch
+torchvision
+xgboost
+matplotlib
+lmdb
+natsort
+editdistance
